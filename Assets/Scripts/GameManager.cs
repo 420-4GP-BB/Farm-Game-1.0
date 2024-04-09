@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     private static GameManager _instance;
     private string _nomJoueur;
     private Inventaire _inventaire;
+    private string[] _niveaux;
 
     public string NomJoueur
     {
@@ -25,6 +26,14 @@ public class GameManager : MonoBehaviour
         get
         {
             return _instance;
+        }
+    }
+
+    public static string[] Niveau
+    {
+        get
+        {
+
         }
     }
 
