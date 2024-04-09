@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,9 +6,8 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     private static GameManager _instance;
-    private string _nomJoueur;
+    [SerializeField] private string _nomJoueur;
     private Inventaire _inventaire;
-    private string[] _niveaux;
 
     public string NomJoueur
     {
@@ -29,23 +29,19 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public static string[] Niveau
+
+    private void Awake()
     {
-        get
+        // On vérifie si c'est la première fois que la variable statique est affectée
+        // et on s'assure que l'objet ne sera pas détruit lors du chargement d'une autre scène
+        if (_instance == null)
         {
-
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
         }
-    }
-
-
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        else
+        {
+            Destroy(this);     // La source citée plus haut fait Destroy(gameObject) ce qui semble suspect.
+        }
     }
 }

@@ -14,14 +14,12 @@ public class Controleur : MonoBehaviour
     [SerializeField] private TextMeshProUGUI graines;
     [SerializeField] private TextMeshProUGUI ors;
 
-    //private GameManager gameManager;
+    private GameManager gameManager;
     
     void Start()
     {
-        saisieNom.text = "Mathurin";
-        //gameManager = GameManager.Instance;
-        //saisieNom.text = gameManager.NomJoueur;
-        //saisieNivDiff.value = gameManager.Ins_Inventaire.ToString();
+        gameManager = GameManager.Instance;
+        saisieNom.text = gameManager.NomJoueur;
     }
 
     void Update()
@@ -59,17 +57,24 @@ public class Controleur : MonoBehaviour
 
     public void ChargerJeu()
     {
-        
+        ChangerNom();
+        ChangerInventaire();
         SceneManager.LoadScene("Ferme");
     }
 
     public void ChangerNom()
     {
-
+        if(saisieNom.text != null)
+        {
+            gameManager.NomJoueur = saisieNom.text;
+        }
     }
 
     public void ChangerInventaire()
     {
-
+        if(saisieNivDiff != null)
+        {
+            gameManager.Ins_Inventaire = new Inventaire(int.Parse(oeufs.text), int.Parse(graines.text), int.Parse(ors.text));
+        }
     }
 }

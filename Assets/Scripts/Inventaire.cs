@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Inventaire : MonoBehaviour
+public class Inventaire
 {
 
     public Inventaire(int oeufs, int graines, int or)
