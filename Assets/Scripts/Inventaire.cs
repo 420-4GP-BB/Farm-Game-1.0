@@ -10,7 +10,6 @@ public class Inventaire
         NbOeufs = oeufs;
         NbOr = or;
         NbGraines = graines;
-        NbOeufs = 0;
         NbChoux = 0;
     }
 

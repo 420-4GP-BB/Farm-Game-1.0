@@ -67,6 +67,7 @@ public class Controleur : MonoBehaviour
         if(saisieNom.text != null)
         {
             gameManager.NomJoueur = saisieNom.text;
+            Debug.Log(gameManager.NomJoueur);
         }
     }
 
@@ -75,6 +76,9 @@ public class Controleur : MonoBehaviour
         if(saisieNivDiff != null)
         {
             gameManager.Ins_Inventaire = new Inventaire(int.Parse(oeufs.text), int.Parse(graines.text), int.Parse(ors.text));
+            Debug.Log(gameManager.Ins_Inventaire.NbGraines.ToString());
+            Debug.Log(gameManager.Ins_Inventaire.NbOeufs.ToString());
+            Debug.Log(gameManager.Ins_Inventaire.NbOr.ToString());
         }
     }
 }
