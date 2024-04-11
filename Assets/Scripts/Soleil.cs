@@ -27,6 +27,16 @@ public class Soleil : MonoBehaviour
         }
     }
 
+    public string GetHeure()
+    {
+        float proportion = (1 - ProportionRestante);
+        float proportionEnMin = proportion * dureeJournee;
+        int heure = (int)(proportionEnMin / 60); 
+        int minute = (int)(proportionEnMin % 60); 
+        string temps = string.Format("{0:00}:{1:00}", heure, minute);
+        return (temps);
+    }
+
     /// <summary>
     /// Proportion de la journée qui reste à écouler
     /// Valeur qui diminue, tout de suite après minuit on est à 1.0 et on diminue avec le temps jusqu'à 0.0
@@ -78,6 +88,8 @@ public class Soleil : MonoBehaviour
         dureeJourneeRestante -= Time.deltaTime * vitesse;
 
         float progression = 1 - ProportionRestante;
+
+        //Time.timeScale = vitesse;
 
         // De 22h00 à 4h00, il doit faire noir.
         // Pas assez noir à mon goût
@@ -139,6 +151,8 @@ public class Soleil : MonoBehaviour
             dureeJourneeRestante = dureeJournee;
         }
     }
+
+
 
     public static Vector3 color2vec(Color color)
     {

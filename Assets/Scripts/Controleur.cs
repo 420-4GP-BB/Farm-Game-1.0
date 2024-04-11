@@ -24,26 +24,30 @@ public class Controleur : MonoBehaviour
 
     void Update()
     {
-        switch(saisieNivDiff.value)
+        if(saisieNivDiff != null)
         {
-            case 0:
-                ors.text = "200";
-                oeufs.text = "5";
-                graines.text = "5";
-                break;
-            case 1: 
-                ors.text = "100";
-                oeufs.text = "3";
-                graines.text = "2";
-                break;
-            case 2:
-                ors.text = "50";
-                oeufs.text = "0";
-                graines.text = "2";
-                break;
-            default: 
-                break;
+            switch (saisieNivDiff.value)
+            {
+                case 0:
+                    ors.text = "200";
+                    oeufs.text = "5";
+                    graines.text = "5";
+                    break;
+                case 1:
+                    ors.text = "100";
+                    oeufs.text = "3";
+                    graines.text = "2";
+                    break;
+                case 2:
+                    ors.text = "50";
+                    oeufs.text = "0";
+                    graines.text = "2";
+                    break;
+                default:
+                    break;
+            }
         }
+        
     }
 
     public void Quitter()
