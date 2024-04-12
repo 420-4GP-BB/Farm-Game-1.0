@@ -2,17 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EtatIdle : MonoBehaviour
+public class EtatIdle : EtatJoueur
 {
-    // Start is called before the first frame update
-    void Start()
+    public EtatIdle(MouvementJoueur joueur, Animator animator, GameManager gameManager) : base(joueur, animator, gameManager) { }
+
+    public override void Enter()
     {
-        
+        animator.SetBool("IsWalking", false);
+        animator.SetBool("IsWalkingFast", false) ;
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Handle()
     {
-        
+    }
+
+    public override void Exit()
+    {
     }
 }

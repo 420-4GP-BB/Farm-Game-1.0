@@ -18,10 +18,10 @@ public class MagasinEntree : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Cursor.lockState = CursorLockMode.None;
             joueur.peutBouger = false;
-            affichagePanel.SetActive(false); // Désactiver l'affichage actuel
-            magasinPanel.SetActive(true);    // Activer l'affichage du magasin
+            Cursor.lockState = CursorLockMode.None;
+            affichagePanel.SetActive(false); 
+            magasinPanel.SetActive(true);    
         }
     }
 
@@ -34,8 +34,8 @@ public class MagasinEntree : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         joueur.peutBouger = true;
-        magasinPanel.SetActive(false);    // Désactiver l'affichage du magasin
-        affichagePanel.SetActive(true); // Activer l'affichage actuel
+        magasinPanel.SetActive(false);    
+        affichagePanel.SetActive(true); 
     }
 
     private void mettreAjourLesBoutons()

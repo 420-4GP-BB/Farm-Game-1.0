@@ -8,6 +8,13 @@ public class GameManager : MonoBehaviour
     private static GameManager _instance;
     [SerializeField] private string _nomJoueur;
     private Inventaire _inventaire;
+    private int _vieJoueur;
+
+    public int VieJoueur
+    {
+        get { return _vieJoueur; }
+        set { _vieJoueur = value;}
+    }
 
     public string NomJoueur
     {

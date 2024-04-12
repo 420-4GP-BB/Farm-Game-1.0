@@ -2,17 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EtatCourse : MonoBehaviour
+public class EtatCourse : EtatJoueur
 {
-    // Start is called before the first frame update
-    void Start()
+    public EtatCourse(MouvementJoueur joueur, Animator animator, GameManager gameManager) : base(joueur, animator, gameManager) { }
+
+    public override void Enter()
     {
-        
+        animator.SetBool("IsWalkingFast", true);
+        animator.SetBool("IsWalking", true);
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Handle()
     {
-        
+        // Vitesse accrue
+    }
+
+    public override void Exit()
+    {
     }
 }
+

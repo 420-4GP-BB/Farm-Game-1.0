@@ -27,6 +27,18 @@ public class Soleil : MonoBehaviour
         }
     }
 
+    public void Start()
+    {
+        OnJourneeTerminee += ajouterJour;
+    }
+
+    private void ajouterJour()
+    {
+        Jour++;
+    }
+
+
+
     public string GetHeure()
     {
         float proportion = (1 - ProportionRestante);
@@ -35,6 +47,12 @@ public class Soleil : MonoBehaviour
         int minute = (int)(proportionEnMin % 60); 
         string temps = string.Format("{0:00}:{1:00}", heure, minute);
         return (temps);
+    }
+
+    public int Jour
+    {
+        get;
+        set;
     }
 
     /// <summary>

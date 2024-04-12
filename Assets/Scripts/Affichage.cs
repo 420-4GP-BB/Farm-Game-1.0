@@ -12,6 +12,7 @@ public class Affichage : MonoBehaviour
     [SerializeField] TextMeshProUGUI nbChoux;
     [SerializeField] TextMeshProUGUI nbHeure;
     [SerializeField] TextMeshProUGUI nbJour;
+    [SerializeField] TextMeshProUGUI vieJoueur;
     [SerializeField] Soleil soleil;
     private GameManager gameManager;
     private int jour;
@@ -19,7 +20,7 @@ public class Affichage : MonoBehaviour
     void Start()
     {
         gameManager = GameManager.Instance;
-        jour = 0;
+        jour = 1;
         soleil.OnJourneeTerminee += ajouterJour;
     }
 
@@ -31,7 +32,8 @@ public class Affichage : MonoBehaviour
         nbGraine.text = gameManager.Ins_Inventaire.NbGraines.ToString();
         nbChoux.text = gameManager.Ins_Inventaire.NbChoux.ToString();
         nbHeure.text = soleil.GetHeure();
-        nbJour.text = "Jour " + jour;
+        nbJour.text = "Jour " + soleil.Jour.ToString();
+        vieJoueur.text = gameManager.VieJoueur.ToString() +"%";
 
 
     }

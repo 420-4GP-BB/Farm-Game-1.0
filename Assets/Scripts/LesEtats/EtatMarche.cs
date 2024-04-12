@@ -2,17 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EtatMarche : MonoBehaviour
+public class EtatMarche : EtatJoueur
 {
-    // Start is called before the first frame update
-    void Start()
+    public EtatMarche(MouvementJoueur joueur, Animator animator, GameManager gameManager) : base(joueur, animator, gameManager) { }
+
+    public override void Enter()
+    {
+        animator.SetBool("IsWalking", true);
+        animator.SetBool("IsWalkingFast", false);
+        gameManager.VieJoueur -= (int)(ConstantesJeu.COUT_MARCHER * 800.0);
+        //gameManager.VieJoueur--;
+    }
+
+    public override void Handle()
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Exit()
     {
-        
     }
 }
