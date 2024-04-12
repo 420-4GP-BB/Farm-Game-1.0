@@ -10,7 +10,7 @@ public class EtatMarche : EtatJoueur
     {
         animator.SetBool("IsWalking", true);
         animator.SetBool("IsWalkingFast", false);
-        gameManager.VieJoueur -= (int)(ConstantesJeu.COUT_MARCHER * 800.0);
+        gameManager.VieJoueur -= ConstantesJeu.COUT_MARCHER;
         //gameManager.VieJoueur--;
     }
 

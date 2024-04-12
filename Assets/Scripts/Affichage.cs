@@ -33,7 +33,8 @@ public class Affichage : MonoBehaviour
         nbChoux.text = gameManager.Ins_Inventaire.NbChoux.ToString();
         nbHeure.text = soleil.GetHeure();
         nbJour.text = "Jour " + soleil.Jour.ToString();
-        vieJoueur.text = gameManager.VieJoueur.ToString() +"%";
+        int vie = (int)(gameManager.VieJoueur);
+        vieJoueur.text = vie.ToString() +"%";
 
 
     }

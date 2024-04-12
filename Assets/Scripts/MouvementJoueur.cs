@@ -76,6 +76,7 @@ public class MouvementJoueur : MonoBehaviour
             }
             else
             {
+                marcheRapide = false;
                 changerEtat(new EtatIdle(this, animator, gameManager)); 
             }
         }
@@ -92,16 +93,26 @@ public class MouvementJoueur : MonoBehaviour
     {
         if (peutBouger)
         {
+            float verticalVelocity = 0;
+            if (!characterController.isGrounded)
+            {
+                verticalVelocity -= 9.81f * Time.deltaTime;
+
+            }
             float vertical = Input.GetAxis("Vertical");
             float horizontal = Input.GetAxis("Horizontal");
             Vector3 forwardMovement = transform.forward * vertical * vitesseDeplacement * Time.deltaTime;
+            Vector3 gravityMovement = new Vector3(0, verticalVelocity, 0);
             rotationY += horizontal * vitesseRotation * Time.deltaTime;
             transform.rotation = Quaternion.Euler(0, rotationY, 0);
-            characterController.Move(forwardMovement);
+            characterController.Move(forwardMovement + gravityMovement);
         }
 
+        
     }
+
+}
 
     
 
-}
+

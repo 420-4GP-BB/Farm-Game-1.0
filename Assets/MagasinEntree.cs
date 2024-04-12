@@ -13,6 +13,7 @@ public class MagasinEntree : MonoBehaviour
     [SerializeField] Button boutonVendreChoux;
     [SerializeField] Button[] boutonsAcheter;
     [SerializeField] TextMeshProUGUI[] lesPrix;
+    [SerializeField] Soleil soleil;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -21,7 +22,8 @@ public class MagasinEntree : MonoBehaviour
             joueur.peutBouger = false;
             Cursor.lockState = CursorLockMode.None;
             affichagePanel.SetActive(false); 
-            magasinPanel.SetActive(true);    
+            magasinPanel.SetActive(true);
+            soleil.vitesse = 0.0f;
         }
     }
 
@@ -35,7 +37,8 @@ public class MagasinEntree : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         joueur.peutBouger = true;
         magasinPanel.SetActive(false);    
-        affichagePanel.SetActive(true); 
+        affichagePanel.SetActive(true);
+        soleil.vitesse = 10.0f;
     }
 
     private void mettreAjourLesBoutons()
@@ -70,7 +73,7 @@ public class MagasinEntree : MonoBehaviour
         }
     }
 
-    private void vendre()
+    public void vendre()
     {
         GameManager.Instance.Ins_Inventaire.NbOr += int.Parse(lesPrix[3].text);
         GameManager.Instance.Ins_Inventaire.NbChoux--;

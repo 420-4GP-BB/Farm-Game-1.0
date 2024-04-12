@@ -73,7 +73,7 @@ public class Soleil : MonoBehaviour
     [SerializeField] private Color morningColor;
     [SerializeField] private Color noonColor;
     [SerializeField] private Color nightColor;
-    [SerializeField] private float vitesse = 10.0f; // 10 minutes par seconde
+    [SerializeField] public float vitesse = 10.0f; // 10 minutes par seconde
 
     private Light _light;
     private float _ancienPourcentage;    
