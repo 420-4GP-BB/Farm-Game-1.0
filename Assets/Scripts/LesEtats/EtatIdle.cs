@@ -10,6 +10,7 @@ public class EtatIdle : EtatJoueur
     {
         animator.SetBool("IsWalking", false);
         animator.SetBool("IsWalkingFast", false) ;
+        animator.SetBool("IsPicking", false);
         gameManager.VieJoueur -= ConstantesJeu.COUT_IMMOBILE;
     }
 

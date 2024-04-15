@@ -10,8 +10,8 @@ public class EtatMarche : EtatJoueur
     {
         animator.SetBool("IsWalking", true);
         animator.SetBool("IsWalkingFast", false);
+        animator.SetBool("IsPicking", false);
         gameManager.VieJoueur -= ConstantesJeu.COUT_MARCHER;
-        //gameManager.VieJoueur--;
     }
 
     public override void Handle()

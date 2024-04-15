@@ -29,6 +29,7 @@ public class Soleil : MonoBehaviour
 
     public void Start()
     {
+        Jour = 1;
         OnJourneeTerminee += ajouterJour;
     }
 
@@ -60,6 +61,7 @@ public class Soleil : MonoBehaviour
     /// Valeur qui diminue, tout de suite après minuit on est à 1.0 et on diminue avec le temps jusqu'à 0.0
     /// </summary>
     public float ProportionRestante => dureeJourneeRestante / dureeJournee;
+    public float Proportion => 1 - ProportionRestante;
 
     /// <summary>
     /// Indique si on est présentement pendant la nuit (entre 21h et 5h am)

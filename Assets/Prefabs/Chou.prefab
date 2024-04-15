@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 377695109577254260}
   - component: {fileID: 3505591625093095599}
-  - component: {fileID: 2687965230984237888}
+  - component: {fileID: -8373799168172408830}
   m_Layer: 6
   m_Name: Chou
-  m_TagString: Untagged
+  m_TagString: Chou
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -57,7 +57,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 0.1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2687965230984237888
+--- !u!114 &-8373799168172408830
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -66,12 +66,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 8329010418877121123}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 257c111c1893bfc84830ebd0b98d5c4d, type: 3}
+  m_Script: {fileID: 11500000, guid: 61686711901f0454f9f7457bbf7d91f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objetBebe: {fileID: 6634661104406886160}
-  objetPetit: {fileID: 1604660538504790051}
-  objetPret: {fileID: 285702617351862827}
+  estPetit: 0
+  estMoyen: 0
+  estPret: 0
+  estPlante: 0
 --- !u!1001 &3074385985484378819
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -164,11 +165,6 @@ PrefabInstance:
 --- !u!4 &6634661104406653744 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8554979865546078707, guid: f38845e04d5169a4b96a7df556773fe0, type: 3}
-  m_PrefabInstance: {fileID: 3074385985484378819}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &6634661104406886160 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8554979865545778643, guid: f38845e04d5169a4b96a7df556773fe0, type: 3}
   m_PrefabInstance: {fileID: 3074385985484378819}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6988885814228018672

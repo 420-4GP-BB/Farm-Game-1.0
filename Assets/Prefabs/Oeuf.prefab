@@ -93,10 +93,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3298238102078615156}
   - component: {fileID: 7580164889084442188}
-  - component: {fileID: 4713564727711687870}
   m_Layer: 6
   m_Name: Oeuf
-  m_TagString: Untagged
+  m_TagString: Oeuf
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -138,15 +137,3 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.25, y: 0.125, z: 0.25}
   m_Center: {x: 0, y: 0.0625, z: 0}
---- !u!114 &4713564727711687870
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7073554749890245275}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba0e0b68cc1d5b44aa9ed04617cfa33c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

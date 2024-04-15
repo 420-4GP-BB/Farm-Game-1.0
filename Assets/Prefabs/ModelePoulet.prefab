@@ -62,9 +62,6 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1311290861401530, guid: 312b31977ed9b2d48a14849ebb8c7fb3, type: 3}
       insertIndex: -1
-      addedObject: {fileID: -566064200725772788}
-    - targetCorrespondingSourceObject: {fileID: 1311290861401530, guid: 312b31977ed9b2d48a14849ebb8c7fb3, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1007931774087834418}
     - targetCorrespondingSourceObject: {fileID: 1311290861401530, guid: 312b31977ed9b2d48a14849ebb8c7fb3, type: 3}
       insertIndex: -1
@@ -74,25 +71,13 @@ PrefabInstance:
       addedObject: {fileID: 1140313807708735909}
     - targetCorrespondingSourceObject: {fileID: 1311290861401530, guid: 312b31977ed9b2d48a14849ebb8c7fb3, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4563896568868898966}
+      addedObject: {fileID: 4358246996790378194}
   m_SourcePrefab: {fileID: 100100000, guid: 312b31977ed9b2d48a14849ebb8c7fb3, type: 3}
 --- !u!1 &8326564455130043134 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1311290861401530, guid: 312b31977ed9b2d48a14849ebb8c7fb3, type: 3}
   m_PrefabInstance: {fileID: 8325272098114512708}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &-566064200725772788
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8326564455130043134}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 647edd5944e4091418c641d293800bb2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!195 &1007931774087834418
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -165,16 +150,19 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &4563896568868898966
+--- !u!114 &4358246996790378194
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8326564455130043134}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0507bf30e64543349bed6e50dbe46ca7, type: 3}
+  m_Script: {fileID: 11500000, guid: 0e060cc2f78e6944eaa5138f10c8d11c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _modeleOeufs: {fileID: 7073554749890245275, guid: 45d209d9179ba9a478c982b67ab74161, type: 3}
+  pointsDePatrouille: []
+  indicePointActuel: 0
+  soleil: {fileID: 0}
+  oeufPrefab: {fileID: 7073554749890245275, guid: 45d209d9179ba9a478c982b67ab74161, type: 3}

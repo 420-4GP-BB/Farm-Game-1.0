@@ -2,17 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EtatPlanter : MonoBehaviour
+public class EtatPlanter : EtatJoueur
 {
-    // Start is called before the first frame update
-    void Start()
+    public EtatPlanter(MouvementJoueur joueur, Animator animator, GameManager gameManager) : base(joueur, animator, gameManager) { }
+    public override void Enter()
     {
-        
+        animator.SetBool("IsWalking", false);
+        animator.SetBool("IsWalkingFast", false);
+        animator.SetBool("IsPicking", false);
+        animator.SetBool("IsPlanting", true);
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Handle()
     {
-        
+    }
+
+    public override void Exit()
+    {
+        animator.SetBool("IsPlanting", false);
     }
 }

@@ -4,17 +4,26 @@ using UnityEngine;
 
 public class Raccourcis : MonoBehaviour
 {
+    [SerializeField] GameObject joueur;
     [SerializeField] Soleil soleil;
+    [SerializeField] GameObject magasin;
+    [SerializeField] GameObject maison;
     private bool tabAppuye;
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            //TP
+            gameObject.GetComponent<CharacterController>().enabled = false;
+            transform.position = maison.gameObject.transform.position;
+            Debug.Log("Joueur TP");
+            gameObject.GetComponent<CharacterController>().enabled = true;
         }
-        else if(Input.GetKeyDown(KeyCode.Alpha2))
+        else if(Input.GetKeyDown(KeyCode.Alpha1))
         {
-            //TP
+            gameObject.GetComponent<CharacterController>().enabled = false;
+            joueur.transform.position = magasin.transform.position;
+            Debug.Log("Joueur TP");
+            gameObject.GetComponent<CharacterController>().enabled = true;
         }
         else if (Input.GetKeyDown(KeyCode.E))
         {
@@ -51,7 +60,7 @@ public class Raccourcis : MonoBehaviour
             }
             else
             {
-                soleil.vitesse = 45.0f;
+                soleil.vitesse = 190.0f;
             }
         }
     }
