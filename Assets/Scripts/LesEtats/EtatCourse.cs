@@ -10,7 +10,7 @@ public class EtatCourse : EtatJoueur
     {
         animator.SetBool("IsWalkingFast", true);
         animator.SetBool("IsWalking", true);
-        gameManager.VieJoueur -= ConstantesJeu.COUT_COURIR;
+        gameManager.VieJoueur -= ConstantesJeu.COUT_COURIR * 0.01 * ConstantesJeu.FACTEUR_NUIT;
     }
 
     public override void Handle()
@@ -20,6 +20,7 @@ public class EtatCourse : EtatJoueur
 
     public override void Exit()
     {
+        animator.SetBool("IsWalkingFast", false);
     }
 }
 

@@ -8,10 +8,7 @@ public class EtatIdle : EtatJoueur
 
     public override void Enter()
     {
-        animator.SetBool("IsWalking", false);
-        animator.SetBool("IsWalkingFast", false) ;
-        animator.SetBool("IsPicking", false);
-        gameManager.VieJoueur -= ConstantesJeu.COUT_IMMOBILE;
+        gameManager.VieJoueur -= ConstantesJeu.COUT_IMMOBILE * ConstantesJeu.FACTEUR_NUIT * 0.01f;
     }
 
     public override void Handle()

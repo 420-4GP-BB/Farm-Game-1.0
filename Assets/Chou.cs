@@ -107,7 +107,6 @@ public class Chou : MonoBehaviour
             estPret = true;
             transform.Find("Moyen").gameObject.SetActive(false);
             transform.Find("Pret").gameObject.SetActive(true);
-            Debug.Log("Est pret : " + estPret);
         }
     }
 

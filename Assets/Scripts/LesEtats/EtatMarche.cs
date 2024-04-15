@@ -9,9 +9,7 @@ public class EtatMarche : EtatJoueur
     public override void Enter()
     {
         animator.SetBool("IsWalking", true);
-        animator.SetBool("IsWalkingFast", false);
-        animator.SetBool("IsPicking", false);
-        gameManager.VieJoueur -= ConstantesJeu.COUT_MARCHER;
+        gameManager.VieJoueur -= ConstantesJeu.COUT_MARCHER * 0.01f * ConstantesJeu.FACTEUR_NUIT;
     }
 
     public override void Handle()
@@ -21,5 +19,6 @@ public class EtatMarche : EtatJoueur
 
     public override void Exit()
     {
+        animator.SetBool("IsWalking", false);
     }
 }

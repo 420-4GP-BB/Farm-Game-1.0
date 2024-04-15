@@ -15,4 +15,7 @@ public static class ConstantesJeu
     
     // Constantes relatives au temps dans une journée
     public const float MINUTES_PAR_JOUR = 1440.0f;
+
+    //le facteur pour la nuit
+    public static float FACTEUR_NUIT = 1.0f;
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting.FullSerializer;
@@ -9,6 +10,7 @@ public class MouvementJoueur : MonoBehaviour
 {
     [SerializeField] private float vitesseRotation;
     [SerializeField] private float vitesseDeplacement;
+    [SerializeField] private Soleil soleil;
     private CharacterController characterController;
     private NavMeshAgent agent;
     private Animator animator;
@@ -19,6 +21,9 @@ public class MouvementJoueur : MonoBehaviour
     private bool marcheRapide = false;
     private GameObject target;
     [SerializeField] private GameObject prefabChou;
+    private bool peutCourir = true;
+    private bool enTrainAttraper;
+    private bool enTrainPlanter;
 
     void Start()
     {
@@ -29,6 +34,7 @@ public class MouvementJoueur : MonoBehaviour
         rotationY = transform.localRotation.eulerAngles.y;
         changerEtat(new EtatIdle(this, animator, gameManager));
         agent = GetComponent<NavMeshAgent>();
+        agent.enabled = false;
     }
 
     private void Update()
@@ -36,14 +42,20 @@ public class MouvementJoueur : MonoBehaviour
 
         deplacerEtRotate();
         definirEtat();
+
+        if (soleil.EstNuit)
+        {
+            ConstantesJeu.FACTEUR_NUIT = 2.0f;
+            peutCourir = false;
+        }
+        else
+        {
+            peutCourir = true;
+        }
         
 
     }
 
-    private void FixedUpdate()
-    {
-
-    }
     void changerEtat(EtatJoueur nouvelEtat)
     {
         if (etatCourant != null)
@@ -57,10 +69,28 @@ public class MouvementJoueur : MonoBehaviour
 
     void definirEtat()
     {
+        bool marche;
         if (peutBouger)
         {
-            bool shiftAppuye = Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift);
-            bool marche = Mathf.Abs(Input.GetAxis("Vertical")) > 0.1f;
+            bool shiftAppuye;
+            if (peutCourir)
+            {
+                shiftAppuye = Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift);
+            }
+            else
+            {
+                shiftAppuye = false;
+            }
+
+            if (agent.isActiveAndEnabled && !enTrainAttraper && !enTrainPlanter)
+            {
+                marche = true;
+                Debug.Log("Agent = actif, marche : true, attraper : " + enTrainAttraper);
+            }
+            else
+            {
+                marche = Mathf.Abs(Input.GetAxis("Vertical")) > 0.1f;
+            }
 
             if (shiftAppuye && marche)
             {
@@ -77,6 +107,17 @@ public class MouvementJoueur : MonoBehaviour
                 {
                     changerEtat(new EtatMarche(this, animator, gameManager));  
                 }
+            }else if (enTrainAttraper && !marche)
+            {
+                changerEtat(new EtatAttraper(this, animator, gameManager));
+                Debug.Log("Etat changé Attraper");
+                Destroy(target);
+                // faire une condition
+                resetInteraction();
+            }else if (enTrainPlanter && !marche && !enTrainAttraper)
+            {
+                changerEtat(new EtatPlanter(this, animator, gameManager));
+
             }
             else
             {
@@ -84,39 +125,47 @@ public class MouvementJoueur : MonoBehaviour
                 changerEtat(new EtatIdle(this, animator, gameManager)); 
             }
 
-            cliqueSouris();
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                cliqueSouris();
+                
+            }
         }
         else
         {
             changerEtat(new EtatIdle(this, animator, gameManager));  
         }
 
+        if (target != null && !agent.pathPending && agent.isActiveAndEnabled)
+        {
+            Debug.Log(agent.remainingDistance);
+            if (agent.remainingDistance <= 1.2f)
+            {
+                Debug.Log("Faire action specifique");
 
+
+                faireActionSpecifique();
+            }
+
+        }
 
 
     }
 
     void cliqueSouris()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+       RaycastHit hit;
+       if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
         {
-            RaycastHit hit;
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100.0f))
-            {
-                gererClique(hit);
-            }
-        }
-
-        
-        if (target != null && !agent.pathPending && agent.remainingDistance <= 0.5f)
-        {
-            Debug.Log("Faire action specifique");
-            faireActionSpecifique();
+            gererClique(hit);
         }
     }
 
     void gererClique(RaycastHit hit)
     {
+        
+        target = hit.collider.gameObject;
+        
         if (hit.collider.CompareTag("Oeuf"))
         {
             target = hit.collider.gameObject;
@@ -127,11 +176,7 @@ public class MouvementJoueur : MonoBehaviour
             target = hit.collider.gameObject;
             allerVers(target.transform.position);
         }
-        else if (hit.collider.CompareTag("TerrePotager"))
-        {
-            target = hit.collider.gameObject;
-            allerVers(target.transform.position);
-        }
+        
 
     }
 
@@ -141,74 +186,64 @@ public class MouvementJoueur : MonoBehaviour
         characterController.enabled = false;
         agent.destination = position;
         changerEtat(new EtatMarche(this, animator, gameManager));
+
+        
     }
 
-    void ramasser()
-    {
-        changerEtat(new EtatAttraper(this, animator, gameManager));
-        resetInteraction();
-        Debug.Log("Objet ramassé");
-    }
+    //void ramasser()
+    //{
+      //  Debug.Log("Entrer ramasser");
+        //enTrainAttraper = true;
+        //Debug.Log("En train ramasser : " + enTrainAttraper);
+    //}
 
     void faireActionSpecifique()
     {
         if (target.CompareTag("Oeuf"))
         {
-            ramasser();
-            Destroy(target);
+            enTrainAttraper = true;
+            
             gameManager.Ins_Inventaire.NbOeufs++;
         }
         else if (target.CompareTag("Chou"))
         {
-            Chou chou = target.GetComponent<Chou>();
-            if (chou != null)
-            {
-                Debug.Log("Chou pret : "+ chou.estPret);
-                if (!chou.estPlante)  
+            Chou chou = target.gameObject.GetComponent<Chou>();
+            Debug.Log($"État du chou: estPlante = {chou.estPlante}, estPret = {chou.estPret}");
+            if (!chou.estPlante)  
                 {
-                    Debug.Log("Planter un nouveau chou ici.");
-                    planterChou();
-                    chou.estPlante = true;
-                    Debug.Log("Faire le plantage comme true");
-                    chou.estPetit = true;
-
+                    planterChou(target, chou);
                     resetInteraction(); 
-        
                     Debug.Log(chou.estPlante + " = plante");
                 }
-                else if (chou.estPret && chou.estPlante) 
-                {
-                    Debug.Log("Chou prêt à être récolté.");
-                    ramasser();
-                    gameManager.Ins_Inventaire.NbChoux++;
-                    chou.reinitialiserObjet();
-                    resetInteraction();
-                }
-                else
-                {
-                    Debug.Log("Ce chou existe mais n'est pas encore prêt à être récolté.");
-                    resetInteraction();
-                }
+            else if (chou.estPret) 
+            {
+                Debug.Log("Chou prêt à être récolté.");
+                enTrainAttraper = true;
+                gameManager.Ins_Inventaire.NbChoux++;
+                chou.reinitialiserObjet();
+            } 
+            else
+            {
+                Debug.Log("Ce chou existe mais n'est pas encore prêt à être récolté.");
+                resetInteraction();
             }
+            
         }
 
     }
 
-    void planterChou()
+    void planterChou(GameObject target, Chou chou)
     {
         if (gameManager.Ins_Inventaire.NbGraines > 0)
         {
-            Vector3 positionPlantation = agent.destination;
-            //animator.SetTrigger("Planter");
+            enTrainPlanter = true;
+           
 
-            GameObject chouGm = Instantiate(prefabChou, positionPlantation, Quaternion.identity, target.transform);
-
-            chouGm.transform.Find("Petit").gameObject.SetActive(true);
-
-            gameManager.Ins_Inventaire.NbGraines--;
-
-            
-            resetInteraction(); 
+            target.transform.Find("Petit").gameObject.SetActive(true);
+            chou.estPlante = true;
+            Debug.Log("Faire le plantage comme true");
+            chou.estPetit = true;
+            gameManager.Ins_Inventaire.NbGraines--;            
         }
         else
         {
@@ -218,7 +253,7 @@ public class MouvementJoueur : MonoBehaviour
     }
 
 
-    void resetInteraction()
+    public void resetInteraction()
     {
         changerEtat(new EtatIdle(this, animator, gameManager));
         agent.enabled = false;
