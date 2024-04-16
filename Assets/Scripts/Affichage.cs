@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
+// Le script pour l'affichage sur l'écran
 public class Affichage : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI nomJoueur;

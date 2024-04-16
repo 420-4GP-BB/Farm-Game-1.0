@@ -1,5 +1,7 @@
 using UnityEngine;
 
+// la classe pour le chou
+
 public class Chou : MonoBehaviour
 {
     private GameObject chouActuel;
@@ -28,16 +30,17 @@ public class Chou : MonoBehaviour
 
     private void Update()
     {
+        // si le chou est plante on gere sa croissance
         if (estPlante)
         {
             gererCroissanceChou();
         }
     }
 
+    // la methode pour gerer la croissance du chou, apres 1 jour il devient moyen, apres 1j il devient grand
     void gererCroissanceChou()
     {
         float tempsActuel = soleil.Proportion * ConstantesJeu.MINUTES_PAR_JOUR;
-
         int joursEcoules = soleil.Jour - jourPlantation;
         Debug.Log (joursEcoules + "=" + soleil.Jour + " - " + jourPlantation);
         if (estPetit && tempsActuel >= tempsDebutChou && joursEcoules == 1)
@@ -76,6 +79,7 @@ public class Chou : MonoBehaviour
         }
     }
 
+    // une methode pour changer le prefab
     private void ChangerPrefabChou(string nouveauPrefab)
     {
         if (chouActuel != null)
@@ -105,6 +109,7 @@ public class Chou : MonoBehaviour
         }
     }
 
+    // une methode pour reinitialiser le chou apres avoir ramassé
     public void reinitialiserObjet()
     {
         transform.Find("Pret").gameObject.SetActive(false);

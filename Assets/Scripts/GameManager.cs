@@ -8,12 +8,20 @@ public class GameManager : MonoBehaviour
     private static GameManager _instance;
     [SerializeField] private string _nomJoueur;
     private Inventaire _inventaire;
+    // mettre la vie du joueur comme attribut
     private double _vieJoueur;
 
     public double VieJoueur
     {
         get { return _vieJoueur; }
-        set { _vieJoueur = value;}
+        set
+        {
+            if(_vieJoueur > 100)
+            {
+                _vieJoueur = 100;
+            }
+            _vieJoueur = value;
+        }
     }
 
     public string NomJoueur

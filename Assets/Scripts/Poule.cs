@@ -12,6 +12,7 @@ public class Poule : MonoBehaviour
     private Soleil soleil;
     //private Animator animator;
 
+    // quand on achete une poule, on la tp dans la ferme sur une position et on planifie une ponte ce jour là (la poule peut commencer a pondre des le premier jour)
     void Start()
     {
         
@@ -39,6 +40,7 @@ public class Poule : MonoBehaviour
             prochainIndice = Random.Range(0, pointsDePatrouille.Length);
         } while (prochainIndice == indicePointActuel); 
         indicePointActuel = prochainIndice;
+        
         agent.destination = pointsDePatrouille[indicePointActuel].position;
     }
 
@@ -61,8 +63,10 @@ public class Poule : MonoBehaviour
 
     }
 
+    // une methode qui planifie la ponte
     void planifierPonte()
     {
+        // une chance sur 2 qu'elle pond, si 1 elle pond, si 0 elle pond pas
         int random = Random.RandomRange(0, 2);
         Debug.Log(random);
         pondreAjd = random == 1;  

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
+// la classe d'état attraper
 public class EtatAttraper : EtatJoueur
 {
     public EtatAttraper(MouvementJoueur joueur, Animator animator, GameManager gameManager) : base(joueur, animator, gameManager) { }

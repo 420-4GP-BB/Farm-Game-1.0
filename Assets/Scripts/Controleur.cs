@@ -16,6 +16,7 @@ public class Controleur : MonoBehaviour
 
     private GameManager gameManager;
     
+    // on instancie le gameManager
     void Start()
     {
         gameManager = GameManager.Instance;
@@ -24,6 +25,7 @@ public class Controleur : MonoBehaviour
 
     void Update()
     {
+        // on change l'affichage si la difficulté change
         if(saisieNivDiff != null)
         {
             switch (saisieNivDiff.value)
@@ -63,7 +65,7 @@ public class Controleur : MonoBehaviour
     {
         ChangerNom();
         ChangerInventaire();
-        gameManager.VieJoueur = 0.1;
+        gameManager.VieJoueur = 1.0;
         SceneManager.LoadScene("Ferme");
     }
 

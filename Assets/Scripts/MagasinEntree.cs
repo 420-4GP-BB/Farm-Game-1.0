@@ -5,6 +5,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+//Le script pour le magasin
 public class MagasinEntree : MonoBehaviour
 {
     [SerializeField] GameObject affichagePanel;
@@ -19,6 +21,7 @@ public class MagasinEntree : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        // si le joueur entre dans le gameobject de magasin on affiche le panel du magasin
         if (other.CompareTag("Player"))
         {
             joueur.peutBouger = false;
@@ -29,20 +32,22 @@ public class MagasinEntree : MonoBehaviour
         }
     }
 
+    
     private void Update()
     {
         mettreAjourLesBoutons();
     }
 
+    // une methode pour retourner au jeu
     public void RetournerAuJeu()
     {
-       // Cursor.lockState = CursorLockMode.Locked;
         joueur.peutBouger = true;
         magasinPanel.SetActive(false);    
         affichagePanel.SetActive(true);
         soleil.vitesse = 10.0f;
     }
 
+    // une methode pour mettre a jour les boutons
     private void mettreAjourLesBoutons()
     {
         majBtnVendreChoux();
@@ -51,6 +56,7 @@ public class MagasinEntree : MonoBehaviour
         majBtnAcheter(2, int.Parse(lesPrix[2].text));
     }
 
+    // une methode pour mettre a jour le bouton de vendre des chou
     private void majBtnVendreChoux()
     {
         if(GameManager.Instance.Ins_Inventaire.NbChoux > 0)
@@ -63,6 +69,7 @@ public class MagasinEntree : MonoBehaviour
         }
     }
 
+    // une methode pour mettre a jour le bouton d'Acheter pour la poule, l'oeuf et les graines
     private void majBtnAcheter(int pos, int prix)
     {
         if(GameManager.Instance.Ins_Inventaire.NbOr >= prix)

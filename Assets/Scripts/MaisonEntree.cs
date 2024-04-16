@@ -46,6 +46,7 @@ public class MaisonEntree : MonoBehaviour
         }
     }
 
+    // si on finit le sommeil on retourne au jeu 
     void FinDuSommeil()
     {
         estEnTrainDeDormir = false;
@@ -55,19 +56,11 @@ public class MaisonEntree : MonoBehaviour
         }
         
         soleil.vitesse = 10.0f;
-        //float progression12h = 12 / 14;
-        //if (soleil.Proportion - derniereFoisMange <= progression12h)
-        ///{
-           // GameManager.Instance.VieJoueur -= ConstantesJeu.GAIN_ENERGIE_SOMMEIL;
-        //}
-        //else
-        //{
-          //  GameManager.Instance.VieJoueur -= ConstantesJeu.COUT_IMMOBILE;
-        //}
         Debug.Log("Fin du sommeil, retour au jeu");
         RetournerAuJeu();
     }
 
+    // s'il n'a pas a manger, le bouton est desactive
     public void mettreAjourBtnManger()
     {
         if(GameManager.Instance.Ins_Inventaire.NbOeufs ==0 && GameManager.Instance.Ins_Inventaire.NbChoux == 0)
@@ -110,9 +103,9 @@ public class MaisonEntree : MonoBehaviour
         affichagePanel.SetActive(true);
     }
 
+    // la methode pour dormir
     public void dormir()
     {
-        //lokan yerkod f lil w ynod f nhar yeb9a 3ndo l bug t3 my9drch yemchi
         double tempsActuel = soleil.Proportion * ConstantesJeu.MINUTES_PAR_JOUR;
         tempsDebutDormir = tempsActuel;
         tempsFinDormir = tempsActuel + 10 * 60;
@@ -136,7 +129,7 @@ public class MaisonEntree : MonoBehaviour
     }
 
     
-
+    // la methode pour retourner au jeu
     public void RetournerAuJeu()
     {
         joueur.peutBouger = true;

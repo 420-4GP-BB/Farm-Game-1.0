@@ -10,12 +10,14 @@ public class Raccourcis : MonoBehaviour
     [SerializeField] GameObject maison;
     public bool perdreEnergie = true;
     private bool tabAppuye;
+
+    // Les raccourcis du clavier
     private void Update()
     {
         if (transform.position.y < -3)
         {
             Debug.Log("On entre");
-            transform.position = maison.transform.position +new Vector3(1, 0, 0); ;
+            transform.position = maison.transform.position;
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
@@ -48,6 +50,7 @@ public class Raccourcis : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.L))
         {
+            // si on clique sur L et il perd de l'énergie, il ne perd plus, si il est en train de perdre et qu'on clique sur L, il recommence a perdre
             if (perdreEnergie)
             {
                 GameManager.Instance.VieJoueur = 1.0f;
@@ -66,15 +69,19 @@ public class Raccourcis : MonoBehaviour
             GameManager.Instance.Ins_Inventaire.NbChoux = 0;
             GameManager.Instance.Ins_Inventaire.NbGraines = 0;
             GameManager.Instance.Ins_Inventaire.NbOr = 0;
-        }else if(Input.GetKeyDown(KeyCode.Tab)) 
+            
+        }
+        // si on clique sur tab et que le jeu est accéléré, on le remet à la normale, sinon on l'accélère
+        else if(Input.GetKeyDown(KeyCode.Tab)) 
         {
-            if(soleil.vitesse == 45.0f)
+            //Time.timeScale = 45.0f;
+            if(Time.timeScale == 45.0f)
             {
-                soleil.vitesse = 10.0f;
+                Time.timeScale = 1.0f;
             }
             else
             {
-                soleil.vitesse = 45.0f;
+                Time.timeScale = 45.0f;
             }
         }
     }

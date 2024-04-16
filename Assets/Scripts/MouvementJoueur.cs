@@ -8,6 +8,7 @@ using UnityEngine.UIElements;
 
 public class MouvementJoueur : MonoBehaviour
 {
+    // declaration de variables et de constantes
     [SerializeField] private float vitesseRotation;
     [SerializeField] private float vitesseDeplacement;
     [SerializeField] private Soleil soleil;
@@ -19,12 +20,13 @@ public class MouvementJoueur : MonoBehaviour
     public bool peutBouger;
     private EtatJoueur etatCourant;
     private bool marcheRapide = false;
-    private GameObject target;
+    private GameObject target; // L'objet qu'on hit 
     [SerializeField] private GameObject prefabChou;
     private bool peutCourir = true;
     private bool enTrainAttraper;
     private bool enTrainPlanter;
 
+    // initialiser pour le start
     void Start()
     {
         peutBouger = true;
@@ -39,7 +41,7 @@ public class MouvementJoueur : MonoBehaviour
 
     private void Update()
     {
-
+        
         deplacerEtRotate();
         definirEtat();
 
@@ -58,6 +60,7 @@ public class MouvementJoueur : MonoBehaviour
 
     }
 
+    // une methode qui change l'etat, prend en parametre le nouvel état
     void changerEtat(EtatJoueur nouvelEtat)
     {
         if (etatCourant != null)
@@ -69,22 +72,27 @@ public class MouvementJoueur : MonoBehaviour
         etatCourant.Enter();
     }
 
+    // une methode pour definir l'etat du joueur
     void definirEtat()
     {
         bool marche;
+        // s'il peut bouger
         if (peutBouger)
         {
             bool shiftAppuye;
+            // s'il peut courir donc on peut appuyer sur le shift 
             if (peutCourir)
             {
                 shiftAppuye = Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift);
             }
             else
             {
+                // sinon (s'il fait nuit donc il peut pas courir)
                 shiftAppuye = false;
                 changerEtat(new EtatMarche(this, animator, gameManager));
             }
 
+            //Si l'agent est activé et en n'set pas en train d'attraper ni planter
             if (agent.isActiveAndEnabled && !enTrainAttraper && !enTrainPlanter)
             {
                 marche = true;
@@ -92,14 +100,17 @@ public class MouvementJoueur : MonoBehaviour
             }
             else
             {
+                // on marche en prenant les touches W-S
                 marche = Mathf.Abs(Input.GetAxis("Vertical")) > 0.1f;
             }
 
             if (shiftAppuye && marche)
             {
+                // si on appuie sur shift en marchant ca va switch la marche rapide (s'il marche rapide on revient a la marche normale et vice-versa)
                 marcheRapide = !marcheRapide;  
             }
 
+            //s'il marche
             if (marche)
             {
                 if (marcheRapide)
@@ -112,9 +123,10 @@ public class MouvementJoueur : MonoBehaviour
                 }
             }else if (enTrainAttraper && !marche)
             {
-
+                // si le target est l'oeuf
                 if (target != null && target.gameObject.CompareTag("Oeuf"))
                 {
+                    // on l'attrape et on destroy
                     changerEtat(new EtatAttraper(this, animator, gameManager));
                     Destroy(target);
                     gameManager.Ins_Inventaire.NbOeufs++;
@@ -122,26 +134,32 @@ public class MouvementJoueur : MonoBehaviour
 
 
                 }
+                // si le target est chou
                 else if (target != null && target.gameObject.CompareTag("Chou"))
                 {
+                    // on l'attrape et on reinitialise l'objet (on detruit pas)
                     changerEtat(new EtatAttraper(this, animator, gameManager));
                     gameManager.Ins_Inventaire.NbChoux++;
                     target.GetComponent<Chou>().reinitialiserObjet();
                     resetInteraction();
                 }
-                
+                // si on est en train de planter
             }else if (enTrainPlanter && !marche)
             {
+                // on fait l'état planter
                 changerEtat(new EtatPlanter(this, animator, gameManager));
                 planterChou(target);
+                //StartCoroutine(attendreFinAnimation());
                 resetInteraction();
             }
             else
             {
+                // sinon on revient à la normale
                 marcheRapide = false;
                 changerEtat(new EtatIdle(this, animator, gameManager)); 
             }
 
+            // si on clique avec la souris
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
                 cliqueSouris();
@@ -153,6 +171,7 @@ public class MouvementJoueur : MonoBehaviour
             changerEtat(new EtatIdle(this, animator, gameManager));  
         }
 
+        // si on arrive au target on fait une action (planter ou attraper)
         if (target != null && !agent.pathPending && agent.isActiveAndEnabled)
         {
             Debug.Log(agent.remainingDistance);
@@ -164,6 +183,14 @@ public class MouvementJoueur : MonoBehaviour
         }
     }
 
+    IEnumerator attendreFinAnimation()
+    {
+        yield return 10.0 * Time.deltaTime;
+        resetInteraction();
+
+    }
+
+    // si on clique sur la souris, on fait un raycast pour gérer le clique 
     void cliqueSouris()
     {
        RaycastHit hit;
@@ -178,11 +205,13 @@ public class MouvementJoueur : MonoBehaviour
         
         target = hit.collider.gameObject;
         
+        // si le target est un oeuf donc on se dirige vers lui
         if (hit.collider.CompareTag("Oeuf"))
         {
             target = hit.collider.gameObject;
             allerVers(target.transform.position);
         }
+        // si le target est un chou donc on se dirige vers lui 
         else if (hit.collider.CompareTag("Chou"))
         {
             target = hit.collider.gameObject;
@@ -192,6 +221,7 @@ public class MouvementJoueur : MonoBehaviour
 
     }
 
+    // quand on se dirige vers l'objet, on se déplace avec un NavMeshAgent et on fait l'état de marche
     void allerVers(Vector3 position)
     {
         agent.enabled = true;
@@ -202,6 +232,9 @@ public class MouvementJoueur : MonoBehaviour
         
     }
 
+    // lorsqu'on fait une action spécifique, si c'est un oeuf on l'attrape. si c'est un chou
+    // si on a de graines et que le chou n'Est pas planté, on plante, si on a pas de graines on se dirige mais on plante pas
+    // sinon on attrape le chou
     void faireActionSpecifique()
     {
         if (target.CompareTag("Oeuf"))
@@ -218,6 +251,10 @@ public class MouvementJoueur : MonoBehaviour
                 {
                     enTrainPlanter = true;
                 }
+                else
+                {
+                    resetInteraction();
+                }
                 }
             else if (chou.estPret) 
             {
@@ -226,13 +263,14 @@ public class MouvementJoueur : MonoBehaviour
             } 
             else
             {
-                //resetInteraction();
+                resetInteraction();
             }
             
         }
 
     }
 
+    // La méthode pour planter le chou et activer le prefab
     void planterChou(GameObject target)
     {
         enTrainPlanter = true;
@@ -246,7 +284,7 @@ public class MouvementJoueur : MonoBehaviour
 
     
 
-
+    // cette méthode remet le joueur a son état idle après avoir fait une animation
     public void resetInteraction()
     {
         changerEtat(new EtatIdle(this, animator, gameManager));
@@ -257,7 +295,7 @@ public class MouvementJoueur : MonoBehaviour
         enTrainPlanter=false;
     }
 
-
+    // une méthode pour se déplacer avec un character Controller
     void deplacerEtRotate()
     {
         if (peutBouger)
@@ -270,7 +308,7 @@ public class MouvementJoueur : MonoBehaviour
             }
             float vertical = Input.GetAxis("Vertical");
             float horizontal = Input.GetAxis("Horizontal");
-            Vector3 forwardMovement = transform.forward * vertical * (vitesseDeplacement * soleil.DeltaMinutesEcoulees / (10 * ConstantesJeu.FACTEUR_NUIT));
+            Vector3 forwardMovement = transform.forward * vertical * (vitesseDeplacement / 10 * (ConstantesJeu.FACTEUR_NUIT) * soleil.DeltaMinutesEcoulees);
             Vector3 gravityMovement = new Vector3(0, verticalVelocity, 0);
             rotationY += horizontal * vitesseRotation * Time.deltaTime;
             transform.rotation = Quaternion.Euler(0, rotationY, 0);
