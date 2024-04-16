@@ -8,10 +8,7 @@ public class EtatAttraper : EtatJoueur
 {
     public EtatAttraper(MouvementJoueur joueur, Animator animator, GameManager gameManager) : base(joueur, animator, gameManager) { }
     public override void Enter()
-    {
-        Debug.Log("Enter");
-        //animator.SetBool("IsWalking", false);
-        //animator.SetBool("IsWalkingFast", false);
+    {        
         animator.SetBool("IsPicking", true) ;
         gameManager.VieJoueur -= ConstantesJeu.COUT_CUEILLIR * ConstantesJeu.FACTEUR_NUIT * 0.01f;
     }

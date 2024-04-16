@@ -5,30 +5,24 @@ public class Chou : MonoBehaviour
     private GameObject chouActuel;
     private Soleil soleil;
 
-    private float tempsDebutChou;
+    public float tempsDebutChou;
     private float tempsDebutMoyen;
 
     public bool estPetit = false;
     public bool estMoyen = false;
     public bool estPret = false;
     public bool estPlante;
-    private int jourPlantation =0;
+    public int jourPlantation;
 
 
     private void Start()
     {
-        soleil = FindObjectOfType<Soleil>();  
+        soleil = FindObjectOfType<Soleil>();
         if (soleil != null)
         {
             Debug.Log("Soleil trouvé");
         }
-        if (estPlante)
-        {
-            tempsDebutChou = soleil.Proportion * ConstantesJeu.MINUTES_PAR_JOUR;
-            jourPlantation = soleil.Jour;
-
-            Debug.Log("Temps debut : " + tempsDebutChou + "Jour : " + jourPlantation);
-        }
+       
     }
 
 
@@ -43,9 +37,9 @@ public class Chou : MonoBehaviour
     void gererCroissanceChou()
     {
         float tempsActuel = soleil.Proportion * ConstantesJeu.MINUTES_PAR_JOUR;
-        //Debug.Log("temps actuel " + tempsActuel);
 
         int joursEcoules = soleil.Jour - jourPlantation;
+        Debug.Log (joursEcoules + "=" + soleil.Jour + " - " + jourPlantation);
         if (estPetit && tempsActuel >= tempsDebutChou && joursEcoules == 1)
         {
             EvoluerVersMoyen();
@@ -107,6 +101,7 @@ public class Chou : MonoBehaviour
             estPret = true;
             transform.Find("Moyen").gameObject.SetActive(false);
             transform.Find("Pret").gameObject.SetActive(true);
+            Debug.Log("Est pret : " + estPret);
         }
     }
 
