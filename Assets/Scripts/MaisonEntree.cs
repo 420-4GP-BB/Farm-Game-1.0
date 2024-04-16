@@ -67,6 +67,10 @@ public class MaisonEntree : MonoBehaviour
         {
             lesBoutons[0].interactable = false;
         }
+        else
+        {
+            lesBoutons[0].interactable= true;
+        }
         
     }
 
@@ -85,7 +89,16 @@ public class MaisonEntree : MonoBehaviour
 
     public void mangerOeuf()
     {
-        GameManager.Instance.VieJoueur += ConstantesJeu.GAIN_ENERGIE_MANGER_OEUF;
+        
+        if(GameManager.Instance.VieJoueur + ConstantesJeu.GAIN_ENERGIE_MANGER_OEUF >= 100)
+        {
+            GameManager.Instance.VieJoueur =100;
+        }
+        else
+        {
+            GameManager.Instance.VieJoueur += ConstantesJeu.GAIN_ENERGIE_MANGER_OEUF;
+        }
+
         derniereFoisMange = soleil.Proportion * ConstantesJeu.MINUTES_PAR_JOUR;
         GameManager.Instance.Ins_Inventaire.NbOeufs--;
         joueur.peutBouger = true;
@@ -95,7 +108,14 @@ public class MaisonEntree : MonoBehaviour
 
     public void mangerChou()
     {
-        GameManager.Instance.VieJoueur += ConstantesJeu.GAIN_ENERGIE_MANGER_CHOU;
+        if (GameManager.Instance.VieJoueur + ConstantesJeu.GAIN_ENERGIE_MANGER_CHOU >= 100)
+        {
+            GameManager.Instance.VieJoueur = 100;
+        }
+        else
+        {
+            GameManager.Instance.VieJoueur += ConstantesJeu.GAIN_ENERGIE_MANGER_CHOU;
+        }
         derniereFoisMange = soleil.Proportion;
         GameManager.Instance.Ins_Inventaire.NbChoux--;
         joueur.peutBouger = true;

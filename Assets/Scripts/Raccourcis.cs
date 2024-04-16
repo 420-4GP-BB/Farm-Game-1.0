@@ -78,6 +78,7 @@ public class Raccourcis : MonoBehaviour
             if(Time.timeScale == 45.0f)
             {
                 Time.timeScale = 1.0f;
+                
             }
             else
             {
