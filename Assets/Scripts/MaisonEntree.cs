@@ -15,6 +15,7 @@ public class MaisonEntree : MonoBehaviour
     private double tempsDebutDormir;
     private double tempsFinDormir;
     private bool estEnTrainDeDormir = false;
+    private double derniereFoisMange;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -54,6 +55,15 @@ public class MaisonEntree : MonoBehaviour
         }
         
         soleil.vitesse = 10.0f;
+        //float progression12h = 12 / 14;
+        //if (soleil.Proportion - derniereFoisMange <= progression12h)
+        ///{
+           // GameManager.Instance.VieJoueur -= ConstantesJeu.GAIN_ENERGIE_SOMMEIL;
+        //}
+        //else
+        //{
+          //  GameManager.Instance.VieJoueur -= ConstantesJeu.COUT_IMMOBILE;
+        //}
         Debug.Log("Fin du sommeil, retour au jeu");
         RetournerAuJeu();
     }
@@ -82,8 +92,9 @@ public class MaisonEntree : MonoBehaviour
 
     public void mangerOeuf()
     {
+        GameManager.Instance.VieJoueur += ConstantesJeu.GAIN_ENERGIE_MANGER_OEUF;
+        derniereFoisMange = soleil.Proportion * ConstantesJeu.MINUTES_PAR_JOUR;
         GameManager.Instance.Ins_Inventaire.NbOeufs--;
-        Cursor.lockState = CursorLockMode.Locked;
         joueur.peutBouger = true;
         mangerOeufPanel.SetActive(false);
         affichagePanel.SetActive(true);
@@ -91,8 +102,9 @@ public class MaisonEntree : MonoBehaviour
 
     public void mangerChou()
     {
+        GameManager.Instance.VieJoueur += ConstantesJeu.GAIN_ENERGIE_MANGER_CHOU;
+        derniereFoisMange = soleil.Proportion;
         GameManager.Instance.Ins_Inventaire.NbChoux--;
-        Cursor.lockState = CursorLockMode.Locked;
         joueur.peutBouger = true;
         mangerChouPanel.SetActive(false);
         affichagePanel.SetActive(true);
@@ -100,6 +112,7 @@ public class MaisonEntree : MonoBehaviour
 
     public void dormir()
     {
+        //lokan yerkod f lil w ynod f nhar yeb9a 3ndo l bug t3 my9drch yemchi
         double tempsActuel = soleil.Proportion * ConstantesJeu.MINUTES_PAR_JOUR;
         tempsDebutDormir = tempsActuel;
         tempsFinDormir = tempsActuel + 10 * 60;
@@ -115,8 +128,10 @@ public class MaisonEntree : MonoBehaviour
         }
 
         estEnTrainDeDormir = true;
-        soleil.vitesse = 100.0f;
+        soleil.vitesse = 90.0f;
         Debug.Log("Commencer à dormir à : " + tempsDebutDormir + ", fin à : " + tempsFinDormir);
+
+        
 
     }
 
@@ -124,7 +139,6 @@ public class MaisonEntree : MonoBehaviour
 
     public void RetournerAuJeu()
     {
-        Cursor.lockState = CursorLockMode.Locked;
         joueur.peutBouger = true;
         maisonPanel.SetActive(false);
         affichagePanel.SetActive(true);

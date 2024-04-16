@@ -63,7 +63,7 @@ public class Controleur : MonoBehaviour
     {
         ChangerNom();
         ChangerInventaire();
-        gameManager.VieJoueur = 1.0;
+        gameManager.VieJoueur = 0.1;
         SceneManager.LoadScene("Ferme");
     }
 

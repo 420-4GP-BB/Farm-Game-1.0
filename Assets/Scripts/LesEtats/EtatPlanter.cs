@@ -9,7 +9,8 @@ public class EtatPlanter : EtatJoueur
     {
         animator.SetBool("IsPlanting", true);
 
-        gameManager.VieJoueur -= ConstantesJeu.COUT_PLANTER* ConstantesJeu.FACTEUR_NUIT * 0.01f;
+        if (joueur.GetComponent<Raccourcis>().perdreEnergie == true)
+            gameManager.VieJoueur -= ConstantesJeu.COUT_PLANTER* ConstantesJeu.FACTEUR_NUIT * 0.01f;
 
     }
 

@@ -54,6 +54,8 @@ public class MouvementJoueur : MonoBehaviour
         }
         
 
+        
+
     }
 
     void changerEtat(EtatJoueur nouvelEtat)
@@ -80,6 +82,7 @@ public class MouvementJoueur : MonoBehaviour
             else
             {
                 shiftAppuye = false;
+                changerEtat(new EtatMarche(this, animator, gameManager));
             }
 
             if (agent.isActiveAndEnabled && !enTrainAttraper && !enTrainPlanter)
@@ -127,16 +130,11 @@ public class MouvementJoueur : MonoBehaviour
                     resetInteraction();
                 }
                 
-                
-                
-                // faire une condition
-                //resetInteraction();
             }else if (enTrainPlanter && !marche)
             {
                 changerEtat(new EtatPlanter(this, animator, gameManager));
                 planterChou(target);
                 resetInteraction();
-
             }
             else
             {
@@ -272,7 +270,7 @@ public class MouvementJoueur : MonoBehaviour
             }
             float vertical = Input.GetAxis("Vertical");
             float horizontal = Input.GetAxis("Horizontal");
-            Vector3 forwardMovement = transform.forward * vertical * vitesseDeplacement * Time.deltaTime;
+            Vector3 forwardMovement = transform.forward * vertical * (vitesseDeplacement * soleil.DeltaMinutesEcoulees / (10 * ConstantesJeu.FACTEUR_NUIT));
             Vector3 gravityMovement = new Vector3(0, verticalVelocity, 0);
             rotationY += horizontal * vitesseRotation * Time.deltaTime;
             transform.rotation = Quaternion.Euler(0, rotationY, 0);

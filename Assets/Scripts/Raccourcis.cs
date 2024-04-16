@@ -4,25 +4,30 @@ using UnityEngine;
 
 public class Raccourcis : MonoBehaviour
 {
-    [SerializeField] GameObject joueur;
+    //[SerializeField] GameObject joueur;
     [SerializeField] Soleil soleil;
     [SerializeField] GameObject magasin;
     [SerializeField] GameObject maison;
+    public bool perdreEnergie = true;
     private bool tabAppuye;
     private void Update()
     {
+        if (transform.position.y < -3)
+        {
+            Debug.Log("On entre");
+            transform.position = maison.transform.position +new Vector3(1, 0, 0); ;
+        }
+
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             gameObject.GetComponent<CharacterController>().enabled = false;
             transform.position = maison.gameObject.transform.position;
-            Debug.Log("Joueur TP");
             gameObject.GetComponent<CharacterController>().enabled = true;
         }
         else if(Input.GetKeyDown(KeyCode.Alpha1))
         {
             gameObject.GetComponent<CharacterController>().enabled = false;
-            joueur.transform.position = magasin.transform.position;
-            Debug.Log("Joueur TP");
+            transform.position = magasin.transform.position;
             gameObject.GetComponent<CharacterController>().enabled = true;
         }
         else if (Input.GetKeyDown(KeyCode.E))
@@ -43,8 +48,17 @@ public class Raccourcis : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.L))
         {
-            //Energie 100% 
-            // perd energie = false;
+            if (perdreEnergie)
+            {
+                GameManager.Instance.VieJoueur = 1.0f;
+                perdreEnergie = false;
+            }
+            else
+            {
+                GameManager.Instance.VieJoueur = 1.0f;
+                perdreEnergie = true;
+            }
+            
         }
         else if (Input.GetKeyDown(KeyCode.P))
         {
@@ -60,7 +74,7 @@ public class Raccourcis : MonoBehaviour
             }
             else
             {
-                soleil.vitesse = 190.0f;
+                soleil.vitesse = 45.0f;
             }
         }
     }

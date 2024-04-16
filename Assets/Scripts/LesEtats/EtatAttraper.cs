@@ -10,7 +10,10 @@ public class EtatAttraper : EtatJoueur
     public override void Enter()
     {        
         animator.SetBool("IsPicking", true) ;
-        gameManager.VieJoueur -= ConstantesJeu.COUT_CUEILLIR * ConstantesJeu.FACTEUR_NUIT * 0.01f;
+        if(joueur.GetComponent<Raccourcis>().perdreEnergie == true)
+        {
+            gameManager.VieJoueur -= ConstantesJeu.COUT_CUEILLIR * ConstantesJeu.FACTEUR_NUIT * 0.01f;
+        }
     }
 
     public override void Handle()

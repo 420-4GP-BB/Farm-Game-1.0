@@ -9,7 +9,8 @@ public class EtatMarche : EtatJoueur
     public override void Enter()
     {
         animator.SetBool("IsWalking", true);
-        gameManager.VieJoueur -= ConstantesJeu.COUT_MARCHER * 0.01f * ConstantesJeu.FACTEUR_NUIT;
+        if (joueur.GetComponent<Raccourcis>().perdreEnergie == true)
+            gameManager.VieJoueur -= ConstantesJeu.COUT_MARCHER * 0.01f * ConstantesJeu.FACTEUR_NUIT;
     }
 
     public override void Handle()

@@ -35,31 +35,24 @@ public class Affichage : MonoBehaviour
         nbChoux.text = gameManager.Ins_Inventaire.NbChoux.ToString();
         nbHeure.text = soleil.GetHeure();
         nbJour.text = "Jour " + soleil.Jour.ToString();
-        int vie = (int)(gameManager.VieJoueur * 100);
-        if(vie <= 20)
+        
+        if(gameManager.VieJoueur <= 0.2)
         {
             vieJoueur.color = Color.red;
         }
+        else
+        {
+            vieJoueur.color= Color.white;
+        }
+        int vie = (int)(gameManager.VieJoueur * 100);
         vieJoueur.text = vie.ToString() +"%";
 
-        if(vie <= 0)
-        {
-            joueur.peutBouger = false;
-            //Cursor.lockState = CursorLockMode.None;
-            gameObject.SetActive(false);
-            mortPanel.SetActive(true);
-            soleil.vitesse = 0.0f;
-            StartCoroutine(retournerMenu());
-            SceneManager.LoadScene("Ferme");
-        }
+        
 
 
     }
-    IEnumerator retournerMenu()
-    {
-        yield return new WaitForSeconds(3);  // Donne 3 secondes pour que le joueur voie le panneau de mort
-        SceneManager.LoadScene("MenuScene");  // Assurez-vous que le nom de la scène du menu est correct
-    }
+   
+    
 
 
 

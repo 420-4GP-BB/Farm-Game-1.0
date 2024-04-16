@@ -8,7 +8,8 @@ public class EtatIdle : EtatJoueur
 
     public override void Enter()
     {
-        gameManager.VieJoueur -= ConstantesJeu.COUT_IMMOBILE * ConstantesJeu.FACTEUR_NUIT * 0.01f;
+        if (joueur.GetComponent<Raccourcis>().perdreEnergie == true)
+            gameManager.VieJoueur -= ConstantesJeu.COUT_IMMOBILE * ConstantesJeu.FACTEUR_NUIT * 0.01f;
     }
 
     public override void Handle()
